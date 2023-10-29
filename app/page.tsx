@@ -1,6 +1,7 @@
 "use client";
 import { FC, useState } from "react";
 import { Raiting } from "../components";
+import { withLayout } from "../Layout/Layout";
 const Home: FC = () => {
    const [raiting, setRaiting] = useState<number>(3);
    return (
@@ -10,4 +11,4 @@ const Home: FC = () => {
    );
 };
 
-export default Home;
+export default withLayout(Home);

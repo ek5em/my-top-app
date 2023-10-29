@@ -6,7 +6,7 @@ interface HtagProps {
   children: ReactNode;
 }
 
-const Htag: FC<HtagProps> = ({ tag, children }) => {
+export const Htag: FC<HtagProps> = ({ tag, children }) => {
   switch (tag) {
     case "h1":
       return <h1 className={classes.h1}>{children}</h1>;
@@ -19,4 +19,3 @@ const Htag: FC<HtagProps> = ({ tag, children }) => {
   }
 };
 
-export default Htag;

@@ -6,7 +6,7 @@ interface PProps extends HTMLAttributes<HTMLParagraphElement> {
   size?: "m" | "l" | "s";
 }
 
-const P: FC<PProps> = ({ size = "m", children, ...props }) => {
+export const P: FC<PProps> = ({ size = "m", children, ...props }) => {
   return (
     <p
       className={cn(classes.p, {
@@ -20,5 +20,3 @@ const P: FC<PProps> = ({ size = "m", children, ...props }) => {
     </p>
   );
 };
-
-export default P;

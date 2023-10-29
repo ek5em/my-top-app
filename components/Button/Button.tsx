@@ -6,7 +6,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   appearence: "primary" | "ghost";
 }
 
-const Button: FC<ButtonProps> = ({
+export const Button: FC<ButtonProps> = ({
   children,
   appearence,
   className,
@@ -24,5 +24,3 @@ const Button: FC<ButtonProps> = ({
     </button>
   );
 };
-
-export default Button;

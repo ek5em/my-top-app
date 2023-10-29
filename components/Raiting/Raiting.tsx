@@ -10,7 +10,7 @@ interface RaitingProps extends HTMLAttributes<HTMLDivElement> {
    setRaiting?: (raiting: number) => void;
 }
 
-const Raiting: FC<RaitingProps> = ({
+export const Raiting: FC<RaitingProps> = ({
    raiting,
    setRaiting,
    isEditable = false,
@@ -83,5 +83,3 @@ const Raiting: FC<RaitingProps> = ({
       </div>
    );
 };
-
-export default Raiting;
