@@ -1,16 +1,13 @@
-import React, { FC } from "react";
-import { Tag } from "../components";
-
+"use client";
+import { FC, useState } from "react";
+import { Raiting } from "../components";
 const Home: FC = () => {
-  return (
-    <div>
-      <Tag size="s" color="ghost">гост</Tag>
-      <Tag size="s" color="gray">грей</Tag>
-      <Tag color="green">грин</Tag>
-      <Tag color="primary">примари</Tag>
-      <Tag color="red">ред</Tag>
-    </div>
-  );
+   const [raiting, setRaiting] = useState<number>(3);
+   return (
+      <div>
+         <Raiting raiting={raiting} isEditable setRaiting={setRaiting} />
+      </div>
+   );
 };
 
 export default Home;
