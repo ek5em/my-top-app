@@ -7,6 +7,9 @@ const Home: FC = () => {
    return (
       <div>
          <Raiting raiting={raiting} isEditable setRaiting={setRaiting} />
+         <Raiting raiting={raiting} isEditable setRaiting={setRaiting} />
+         <Raiting raiting={raiting} isEditable setRaiting={setRaiting} />
+         <Raiting raiting={raiting} isEditable setRaiting={setRaiting} />
       </div>
    );
 };
