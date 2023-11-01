@@ -1,15 +1,17 @@
-"use client";
-import { FC, useState } from "react";
-import { Raiting } from "../components";
+import { FC } from "react";
 import { withLayout } from "../Layout/Layout";
-const Home: FC = () => {
-   const [raiting, setRaiting] = useState<number>(3);
+import { getMenu } from "../api/menu";
+
+const Home: FC = async () => {
+   const menu = await getMenu(0);
+
    return (
       <div>
-         <Raiting raiting={raiting} isEditable setRaiting={setRaiting} />
-         <Raiting raiting={raiting} isEditable setRaiting={setRaiting} />
-         <Raiting raiting={raiting} isEditable setRaiting={setRaiting} />
-         <Raiting raiting={raiting} isEditable setRaiting={setRaiting} />
+         <ul>
+            {menu.map((m) => (
+               <li key={m._id.secondCategory}>{m._id.secondCategory}</li>
+            ))}
+         </ul>
       </div>
    );
 };
