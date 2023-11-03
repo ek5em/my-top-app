@@ -10,22 +10,14 @@ interface TagProps extends HTMLAttributes<HTMLDivElement> {
 
 export const Tag: FC<TagProps> = ({
    size = "l",
-   color,
+   color = "primary",
    href,
    children,
    ...props
 }) => {
    return (
       <div
-         className={cn(classes.tag, {
-            [classes.l]: size === "l",
-            [classes.s]: size === "s",
-            [classes.ghost]: color === "ghost",
-            [classes.gray]: color === "gray",
-            [classes.green]: color === "green",
-            [classes.primary]: color === "primary",
-            [classes.red]: color === "red",
-         })}
+         className={cn(classes.tag, classes[size], classes[color])}
          {...props}
       >
          {href ? <a href={href}>{children}</a> : <>{children}</>}
