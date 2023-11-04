@@ -1,17 +1,17 @@
-export enum ETopLevelCategory {
+export enum TopLevelCategory {
    Courses,
    Services,
    Books,
    Products,
 }
 
-export interface ITopPageAdvantage {
+export interface TopPageAdvantage {
    _id: string;
    title: string;
    description: string;
 }
 
-export interface IHhData {
+export interface HhData {
    _id: string;
    count: number;
    juniorSalary: number;
@@ -20,7 +20,7 @@ export interface IHhData {
    updatedAt: Date;
 }
 
-export interface ITopPageModel {
+export interface TopPageModel {
    tags: string[];
    _id: string;
    secondCategory: string;
@@ -31,9 +31,9 @@ export interface ITopPageModel {
    tagsTitle: string;
    metaTitle: string;
    metaDescription: string;
-   firstCategory: ETopLevelCategory;
-   advantages: ITopPageAdvantage[];
+   firstCategory: TopLevelCategory;
+   advantages: TopPageAdvantage[];
    createdAt: Date;
    updatedAt: Date;
-   hh: IHhData;
+   hh: HhData;
 }
