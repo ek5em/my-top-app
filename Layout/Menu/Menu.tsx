@@ -1,48 +1,37 @@
 import { FC } from "react";
+import Link from "next/link";
+import { notFound, usePathname } from "next/navigation";
 import cn from "classnames";
 import { useMenu } from "../../hooks/useMenu";
 import { FirstLevelCategory, PageItem } from "../../interfaces/menu.interface";
-import { TopLevelCategory } from "../../interfaces/page.interface";
-import { CoursesIcon, BooksIcon, ProductsIcon, ServicesIcon } from "./icons";
+import { firstLevelMenu, getCategoryByPath } from "../../helpers";
 
 import classes from "./Menu.module.css";
 
-const firstLevelMenu: FirstLevelCategory[] = [
-   {
-      route: "courses",
-      name: "Курсы",
-      icon: <CoursesIcon />,
-      id: TopLevelCategory.Courses,
-   },
-   {
-      route: "books",
-      name: "Книги",
-      icon: <BooksIcon />,
-      id: TopLevelCategory.Books,
-   },
-   {
-      route: "products",
-      name: "Товары",
-      icon: <ProductsIcon />,
-      id: TopLevelCategory.Products,
-   },
-   {
-      route: "services",
-      name: "Сервесы",
-      icon: <ServicesIcon />,
-      id: TopLevelCategory.Services,
-   },
-];
-
 export const Menu: FC = () => {
-   const [menu, setCategory, firstLevelCategory] = useMenu();
+   const path = usePathname();
+
+   const [menu, setMenu] = useMenu();
+
+   const firstLevelCategory = getCategoryByPath(path);
+
+   const changeSecondCategory = (secondCategory: string) => {
+      setMenu(
+         menu.map((m) => {
+            if (m._id.secondCategory === secondCategory) {
+               m.isActive = !m.isActive;
+            }
+            return m;
+         })
+      );
+   };
 
    const firstLevelMenuBiulder = (): JSX.Element => {
       return (
          <>
             {firstLevelMenu.map((menu) => (
                <div key={menu.name}>
-                  <a href={`/${menu.route}`}>
+                  <Link href={`/${menu.route}`}>
                      <div
                         className={cn(classes.firstLevel, {
                            [classes.firstLevelActive]:
@@ -52,7 +41,7 @@ export const Menu: FC = () => {
                         {menu.icon}
                         <span>{menu.name}</span>
                      </div>
-                  </a>
+                  </Link>
                   {menu.id === firstLevelCategory && secondLevelBuilder(menu)}
                </div>
             ))}
@@ -63,20 +52,30 @@ export const Menu: FC = () => {
    const secondLevelBuilder = (menuItem: FirstLevelCategory): JSX.Element => {
       return (
          <div className={classes.secondBlock}>
-            {menu.map((m) => (
-               <div key={m._id.secondCategory}>
-                  <div className={classes.secondLevel}>
-                     {m._id.secondCategory}
+            {menu.map((m) => {
+               if (m.pages.map((p) => p.alias).includes(path.split("/")[2])) {
+                  m.isActive = true;
+               }
+               return (
+                  <div key={m._id.secondCategory}>
+                     <div
+                        className={classes.secondLevel}
+                        onClick={() => {
+                           changeSecondCategory(m._id.secondCategory);
+                        }}
+                     >
+                        {m._id.secondCategory}
+                     </div>
+                     <div
+                        className={cn(classes.secondLevelBlock, {
+                           [classes.secondLevelBlockActive]: m.isActive,
+                        })}
+                     >
+                        {thirdLevelMenuBuilder(m.pages, menuItem.route)}
+                     </div>
                   </div>
-                  <div
-                     className={cn(classes.secondLevelBlock, {
-                        [classes.secondLevelBlockActive]: m.isActive,
-                     })}
-                  >
-                     {thirdLevelMenuBuilder(m.pages, menuItem.route)}
-                  </div>
-               </div>
-            ))}
+               );
+            })}
          </div>
       );
    };
@@ -88,15 +87,16 @@ export const Menu: FC = () => {
       return (
          <>
             {pages.map((page) => (
-               <a
+               <Link
                   key={page._id}
                   href={`/${route}/${page.alias}`}
                   className={cn(classes.thirdLevel, {
-                     [classes.thirdLevelActive]: false,
+                     [classes.thirdLevelActive]:
+                        `/${route}/${page.alias}` === path,
                   })}
                >
                   {page.category}
-               </a>
+               </Link>
             ))}
          </>
       );

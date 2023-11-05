@@ -7,8 +7,8 @@ import { getMenu } from "../api";
 
 export const useMenu = (
    initialCategory: TopLevelCategory = 0
-): [MenuItem[], (newCategory: TopLevelCategory) => void, TopLevelCategory] => {
-   const [menu, setMenu] = useState<MenuItem[]>([]);
+): [MenuItem[], (newMenu: MenuItem[]) => void, TopLevelCategory] => {
+   const [menuState, setStateMenu] = useState<MenuItem[]>([]);
    const [firstLevelCategory, setFirstLevelCategory] =
       useState<TopLevelCategory>(0);
 
@@ -18,8 +18,12 @@ export const useMenu = (
 
    const setCategory = async (newCategory: TopLevelCategory) => {
       const newMenu = await getMenu(newCategory);
-      setMenu(newMenu);
       setFirstLevelCategory(newCategory);
+      setMenu(newMenu);
    };
-   return [menu, setCategory, firstLevelCategory];
+
+   const setMenu = (newMenu: MenuItem[]) => {
+      setStateMenu(newMenu);
+   };
+   return [menuState, setMenu, firstLevelCategory];
 };
