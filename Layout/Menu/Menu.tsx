@@ -1,19 +1,35 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import Link from "next/link";
-import { notFound, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import cn from "classnames";
-import { useMenu } from "../../hooks/useMenu";
-import { FirstLevelCategory, PageItem } from "../../interfaces/menu.interface";
-import { firstLevelMenu, getCategoryByPath } from "../../helpers";
-
+import { TopLevelCategory } from "../../interfaces/page.interface";
+import {
+   FirstLevelCategory,
+   MenuItem,
+   PageItem,
+} from "../../interfaces/menu.interface";
+import { firstLevelMenu } from "../../helpers";
 import classes from "./Menu.module.css";
+import { getMenu } from "../../api";
 
 export const Menu: FC = () => {
+   const [menu, setMenu] = useState<MenuItem[]>(null!);
+   const [firstLevelCategory, setFirstLevelCategory] =
+      useState<TopLevelCategory>(0);
+
    const path = usePathname();
 
-   const [menu, setMenu] = useMenu();
+   useEffect(() => {
+      const fetchMenu = async () => {
+         const menuData = await getMenu(firstLevelCategory);
+         setMenu(menuData);
+      };
+      fetchMenu();
+   }, [firstLevelCategory]);
 
-   const firstLevelCategory = getCategoryByPath(path);
+   const changeFirtsCategory = async (newCategory: TopLevelCategory) => {
+      setFirstLevelCategory(newCategory);
+   };
 
    const changeSecondCategory = (secondCategory: string) => {
       setMenu(
@@ -33,6 +49,9 @@ export const Menu: FC = () => {
                <div key={menu.name}>
                   <Link href={`/${menu.route}`}>
                      <div
+                        onClick={() => {
+                           changeFirtsCategory(menu.id);
+                        }}
                         className={cn(classes.firstLevel, {
                            [classes.firstLevelActive]:
                               menu.id === firstLevelCategory,
@@ -52,30 +71,33 @@ export const Menu: FC = () => {
    const secondLevelBuilder = (menuItem: FirstLevelCategory): JSX.Element => {
       return (
          <div className={classes.secondBlock}>
-            {menu.map((m) => {
-               if (m.pages.map((p) => p.alias).includes(path.split("/")[2])) {
-                  m.isActive = true;
-               }
-               return (
-                  <div key={m._id.secondCategory}>
-                     <div
-                        className={classes.secondLevel}
-                        onClick={() => {
-                           changeSecondCategory(m._id.secondCategory);
-                        }}
-                     >
-                        {m._id.secondCategory}
+            {menu &&
+               menu.map((m) => {
+                  if (
+                     m.pages.map((p) => p.alias).includes(path.split("/")[2])
+                  ) {
+                     m.isActive = true;
+                  }
+                  return (
+                     <div key={m._id.secondCategory}>
+                        <div
+                           className={classes.secondLevel}
+                           onClick={() => {
+                              changeSecondCategory(m._id.secondCategory);
+                           }}
+                        >
+                           {m._id.secondCategory}
+                        </div>
+                        <div
+                           className={cn(classes.secondLevelBlock, {
+                              [classes.secondLevelBlockActive]: m.isActive,
+                           })}
+                        >
+                           {thirdLevelMenuBuilder(m.pages, menuItem.route)}
+                        </div>
                      </div>
-                     <div
-                        className={cn(classes.secondLevelBlock, {
-                           [classes.secondLevelBlockActive]: m.isActive,
-                        })}
-                     >
-                        {thirdLevelMenuBuilder(m.pages, menuItem.route)}
-                     </div>
-                  </div>
-               );
-            })}
+                  );
+               })}
          </div>
       );
    };

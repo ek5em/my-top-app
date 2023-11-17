@@ -29,22 +29,5 @@ export const firstLevelMenu: FirstLevelCategory[] = [
    },
 ];
 
-export const getCategoryByPath = (path: string) => {
-   switch (path.split("/")[1]) {
-      case "courses": {
-         return TopLevelCategory.Courses;
-      }
-      case "books": {
-         return TopLevelCategory.Books;
-      }
-      case "services": {
-         return TopLevelCategory.Services;
-      }
-      case "products": {
-         return TopLevelCategory.Products;
-      }
-      default: {
-         return null;
-      }
-   }
-};
+export const Price = (price: number): string =>
+   price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";

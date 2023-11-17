@@ -1,0 +1,57 @@
+.title {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    justify-items: right;
+    align-items: center;
+    gap:20px;
+}
+
+.HhTitle {
+    display: grid;
+    grid-template-columns:  auto 1fr;
+    justify-items: left;
+    align-items: center;
+    gap: 21px
+}
+
+.skills {
+    margin-top: 30px;
+}
+
+.tags {
+    display: flex;
+    gap:10px;
+    margin-top: 20px;
+}
+
+.seo {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 29px; 
+}
+
+.seo h1 {
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 35px;
+    margin: 0;
+}
+
+.seo h2 {
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 30px;
+    margin: 0;
+    padding: 15px 0 5px 0;
+}
+
+.seo h3 {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 27px;
+    margin: 0;
+}
+
+.seo li {
+    margin-left: 20px;
+}

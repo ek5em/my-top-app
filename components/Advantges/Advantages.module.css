@@ -1,0 +1,23 @@
+.advantages{
+    margin-top: 50px;
+}
+
+.advantage {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    grid-template-rows: 50px 1fr;
+    gap: 10px 40px;
+    align-items: center;
+    margin-bottom: 22px
+}
+
+.advantage:first-of-type {
+    margin-top: 27px;
+}
+
+.vline {
+    border-left: 1px solid var(--gray-light);
+    height: 85%;
+    margin-left: 25px;
+}
+

@@ -3,3 +3,7 @@ export { P } from "./P/P";
 export { Tag } from "./Tag/Tag";
 export { Button } from "./Button/Button";
 export { Raiting } from "./Raiting/Raiting";
+export { Card } from "./Card/Card";
+export { HhDataComponent } from "./HhData/HhData";
+export { Advantages } from "./Advantges/Advantages";
+export { Sort } from "./Sort/Sort";
