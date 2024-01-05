@@ -31,3 +31,11 @@ export const firstLevelMenu: FirstLevelCategory[] = [
 
 export const Price = (price: number): string =>
    price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+
+export const DeclineWord = (
+   num: number,
+   words: [string, string, string]
+): string => {
+   const rest = num % 20;
+   return words[rest === 0 || rest > 4 ? 2 : rest === 1 ? 0 : 1];
+};

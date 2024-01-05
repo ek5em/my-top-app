@@ -13,11 +13,12 @@ export const Tag: FC<TagProps> = ({
    color = "primary",
    href,
    children,
+   className,
    ...props
 }) => {
    return (
       <div
-         className={cn(classes.tag, classes[size], classes[color])}
+         className={cn(classes.tag, classes[size], classes[color], className)}
          {...props}
       >
          {href ? <a href={href}>{children}</a> : <>{children}</>}

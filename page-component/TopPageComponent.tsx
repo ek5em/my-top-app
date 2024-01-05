@@ -2,7 +2,14 @@
 import React, { FC, useReducer } from "react";
 import { TopLevelCategory, TopPageModel } from "../interfaces/page.interface";
 import { ProductModel } from "../interfaces/product.interface";
-import { Advantages, HhDataComponent, Htag, P, Sort, Tag } from "../components";
+import {
+   Advantages,
+   HhDataComponent,
+   Htag,
+   Product,
+   Sort,
+   Tag,
+} from "../components";
 
 import classes from "./TopPageComponent.module.css";
 import { ESort } from "../components/Sort/Sort";
@@ -44,7 +51,7 @@ const TopPageComponent: FC<ITopPageProps> = ({
          </div>
          <div>
             {sortedProducts &&
-               sortedProducts.map((p) => <div key={p._id}>{p.title}</div>)}
+               sortedProducts.map((p) => <Product key={p._id} product={p} />)}
          </div>
          <div className={classes.HhTitle}>
             <Htag tag="h2">Вакансии - {page.category}</Htag>

@@ -7,3 +7,7 @@ export { Card } from "./Card/Card";
 export { HhDataComponent } from "./HhData/HhData";
 export { Advantages } from "./Advantges/Advantages";
 export { Sort } from "./Sort/Sort";
+export { Input } from "./Input/Input";
+export { Textarea } from "./Textarea/Textarea";
+export { Search } from "./Search/Search";
+export { Product } from "./Product/Product";
