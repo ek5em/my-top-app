@@ -1,4 +1,9 @@
+.textareaWrapper {
+   position: relative;
+}
+
 .textarea {
+   width: 100%;
    border-radius: 5px;
    border: none;
    background: var(--white);
@@ -9,8 +14,20 @@
    padding: 7px 12px;
    outline-color: var(--primary);
    font-family: var(--font-family);
+   resize: vertical;
 }
 
 .textarea::placeholder {
    color: var(--gray);
+}
+
+.error {
+   border: 1px solid var(--red);
+}
+
+.errorMessage {
+   position: absolute;
+   color: var(--red);
+   bottom: -15px;
+   left: 0;
 }

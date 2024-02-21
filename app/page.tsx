@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { withLayout } from "../Layout/Layout";
 
-const Home: FC = async () => {
+const Home: FC = () => {
    return <div></div>;
 };
 

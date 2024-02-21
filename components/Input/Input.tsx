@@ -1,10 +1,31 @@
-import { FC, InputHTMLAttributes } from "react";
+import { ForwardedRef, InputHTMLAttributes, forwardRef } from "react";
+import { FieldError } from "react-hook-form";
 import cn from "classnames";
 
 import classes from "./Input.module.css";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {}
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+   error?: FieldError;
+}
 
-export const Input: FC<InputProps> = ({ className, ...props }) => {
-   return <input className={cn(className, classes.input)} {...props} />;
-};
+export const Input = forwardRef(
+   (
+      { error, className, ...props }: InputProps,
+      ref: ForwardedRef<HTMLInputElement>
+   ) => {
+      return (
+         <div className={cn(className, classes.inputWrapper)}>
+            <input
+               className={cn(classes.input, {
+                  [classes.error]: error,
+               })}
+               ref={ref}
+               {...props}
+            />
+            {error && (
+               <span className={classes.errorMessage}>{error.message}</span>
+            )}
+         </div>
+      );
+   }
+);
