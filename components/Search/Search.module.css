@@ -4,13 +4,17 @@
 
 .btn {
    position: absolute;
-   right: 3px;
-   top: 3px;
-   width: 30px;
-   height: 30px;
-   padding: 7px;
+   right: 0px;
+   top: 0;
+   width: 31px;
+   height: 32px;
+   padding: 8px;
 }
 
 .input {
    height: 36px;
+}
+
+.input input {
+   width: 100%;
 }

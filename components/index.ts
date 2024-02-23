@@ -12,3 +12,6 @@ export { Textarea } from "./Textarea/Textarea";
 export { Search } from "./Search/Search";
 export { Product } from "./Product/Product";
 export { Review } from "./Review/Review";
+export { Up } from "./Up/Up";
+export { ButtonIcon, EIcon } from "./ButtonIcon/ButtonIcon";
+export { Logo } from "./Logo/Logo";

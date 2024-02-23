@@ -1,11 +1,13 @@
 .sort {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 43px;
+    align-self: flex-start;
 }
 
 .sort span {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
     align-items: center;
     cursor: pointer;
     color: #000;
@@ -26,5 +28,3 @@
     color: var(--primary);
     font-weight: 700;
 }
-
-

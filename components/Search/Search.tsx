@@ -1,3 +1,4 @@
+"use client";
 import { FC, HTMLAttributes, useState, KeyboardEvent } from "react";
 import cn from "classnames";
 import { Input } from "../Input/Input";
