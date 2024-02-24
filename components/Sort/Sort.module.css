@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 43px;
-    align-self: flex-start;
+    justify-self: flex-end;
 }
 
 .sort span {
@@ -27,4 +27,10 @@
 .sort span.active {
     color: var(--primary);
     font-weight: 700;
+}
+
+@media (max-width: 765px) {
+    .sort {
+        justify-self: flex-start;
+    }
 }
