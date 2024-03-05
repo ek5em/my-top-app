@@ -3,6 +3,7 @@
 import React, {
     ForwardedRef,
     HTMLAttributes,
+    KeyboardEvent,
     forwardRef,
     useRef,
     useState,
@@ -53,6 +54,7 @@ export const Product = motion(
                     behavior: "smooth",
                     block: "start",
                 });
+                reviewRef.current?.focus();
             };
 
             const variants: Variants = {
@@ -176,12 +178,16 @@ export const Product = motion(
                         </div>
                     </Card>
                     <motion.div
-                        className={classes.reviews}
                         variants={variants}
                         animate={isReviewOpen ? "visible" : "hidden"}
                         initial="hidden"
                     >
-                        <Card color="blue" ref={reviewRef}>
+                        <Card
+                            color="blue"
+                            ref={reviewRef}
+                            className={classes.reviews}
+                            tabIndex={0}
+                        >
                             {reviews.map((review) => (
                                 <div key={review._id}>
                                     <Review review={review} />
