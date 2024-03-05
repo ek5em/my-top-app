@@ -1,9 +1,7 @@
 "use client";
-
 import React, {
     ForwardedRef,
     HTMLAttributes,
-    KeyboardEvent,
     forwardRef,
     useRef,
     useState,
@@ -58,15 +56,16 @@ export const Product = motion(
             };
 
             const variants: Variants = {
-                visible: { height: "auto", opacity: 1 },
-                hidden: { height: 0, opacity: 0 },
+                visible: { height: "auto", opacity: 1, display: "block" },
+                hidden: { height: 0, opacity: 0, display: "none" },
             };
+
             return (
                 <div ref={ref} className={className} {...props}>
                     <Card className={classes.product} color="white">
                         <div className={classes.logo}>
-                            <Image
-                                src={process.env.NEXT_PUBLIC_DOMAIN + image}
+                            <img
+                                src={process.env.NEXT_PUBLIC_DOMAIN + image[1]}
                                 alt={title}
                                 height={70}
                                 width={70}
@@ -186,7 +185,7 @@ export const Product = motion(
                             color="blue"
                             ref={reviewRef}
                             className={classes.reviews}
-                            tabIndex={0}
+                            tabIndex={isReviewOpen ? 0 : -1}
                         >
                             {reviews.map((review) => (
                                 <div key={review._id}>
@@ -194,7 +193,10 @@ export const Product = motion(
                                     <hr className={cn(classes.line)} />
                                 </div>
                             ))}
-                            <ReviewForm productId={_id} />
+                            <ReviewForm
+                                productId={_id}
+                                tabIndex={isReviewOpen ? 0 : -1}
+                            />
                         </Card>
                     </motion.div>
                 </div>

@@ -2,6 +2,10 @@
    position: relative;
 }
 
+.rating span {
+   display: inline-block;
+}
+
 .star {
    transition: all 0.3s;
    margin-right: 5px;

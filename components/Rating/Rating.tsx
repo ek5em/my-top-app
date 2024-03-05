@@ -49,6 +49,19 @@ export const Rating = forwardRef(
             setRaitingArray(newArray);
         };
 
+        const focusHandler = (r: number, i: number): -1 | 0 => {
+            if (!isEditable) {
+                return -1;
+            }
+            if (!rating && i === 0) {
+                return 0;
+            }
+            if (rating === i + 1) {
+                return 0;
+            }
+            return -1;
+        };
+
         const onHover = (i: number) => {
             isEditable && raitingBuilder(i);
         };
@@ -68,16 +81,20 @@ export const Rating = forwardRef(
             if (!isEditable || !setRating) {
                 return;
             }
+            if (!rating) {
+                return setRating(1);
+            }
             const { code: key } = e;
             if (key === "ArrowRight" || key === "ArrowUp") {
                 e.preventDefault();
                 setRating(rating < 5 ? rating + 1 : 5);
+                ratingArrayRef.current[rating]?.focus();
             }
             if (key === "ArrowLeft" || key === "ArrowDown") {
                 e.preventDefault();
                 setRating(rating > 1 ? rating - 1 : 1);
+                ratingArrayRef.current[rating - 2]?.focus();
             }
-            ratingArrayRef.current[rating - 1]?.focus();
         };
 
         return (
@@ -95,7 +112,7 @@ export const Rating = forwardRef(
                             onMouseEnter={() => onHover(i + 1)}
                             onMouseLeave={onLeave}
                             onClick={() => onClick(i + 1)}
-                            tabIndex={isEditable ? 0 : -1}
+                            tabIndex={focusHandler(rating, i)}
                             onKeyDown={keyDownHandler}
                             ref={(r) => ratingArrayRef.current?.push(r)}
                         >

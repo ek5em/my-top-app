@@ -1,8 +1,6 @@
-"use client";
 import {
     FunctionComponent,
     KeyboardEvent,
-    useEffect,
     useRef,
     useState,
 } from "react";
