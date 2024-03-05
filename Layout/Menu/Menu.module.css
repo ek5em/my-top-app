@@ -44,9 +44,9 @@
 .thirdLevel {
     margin-top: 100px;
     cursor: pointer;
-    line-height: 19px;
     font-weight: 500;
     font-size: 14px;
+    outline-offset: -1px;
 }
 
 .thirdLevelActive,

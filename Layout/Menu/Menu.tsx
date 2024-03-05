@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, KeyboardEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import cn from "classnames";
@@ -51,7 +51,6 @@ export const Menu: FC = () => {
         visible: {
             height: "auto",
             opacity: 1,
-            translateY: -3,
         },
         hidden: {
             opacity: 0,
@@ -72,6 +71,13 @@ export const Menu: FC = () => {
                 return m;
             })
         );
+    };
+
+    const changeSecondCategoryKey = (key: KeyboardEvent, category: string) => {
+        if (key.code === "Space" || key.code === "Enter") {
+            key.preventDefault();
+            changeSecondCategory(category);
+        }
     };
 
     const firstLevelMenuBiulder = (): JSX.Element => {
@@ -116,9 +122,16 @@ export const Menu: FC = () => {
                         return (
                             <div key={m._id.secondCategory}>
                                 <div
+                                    tabIndex={0}
                                     className={classes.secondLevel}
                                     onClick={() => {
                                         changeSecondCategory(
+                                            m._id.secondCategory
+                                        );
+                                    }}
+                                    onKeyDown={(key: KeyboardEvent) => {
+                                        changeSecondCategoryKey(
+                                            key,
                                             m._id.secondCategory
                                         );
                                     }}
@@ -162,6 +175,7 @@ export const Menu: FC = () => {
                                 [classes.thirdLevelActive]:
                                     `/${route}/${page.alias}` === path,
                             })}
+                            tabIndex={isOpen ? 0 : -1}
                         >
                             {page.category}
                         </Link>
