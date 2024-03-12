@@ -8,7 +8,6 @@ import React, {
 } from "react";
 import cn from "classnames";
 import { Variants, motion } from "framer-motion";
-import Image from "next/image";
 import { ProductModel } from "../../interfaces/product.interface";
 import { DeclineWord, Price } from "../../helpers";
 import { Review, Card, Rating, Tag, Button } from "..";
@@ -73,20 +72,38 @@ export const Product = motion(
                         </div>
                         <div className={classes.title}>{title}</div>
                         <div className={classes.price}>
-                            {Price(price)}
+                            <span>
+                                <span className="screenReaderComment">
+                                    цена
+                                </span>
+                                {Price(price)}
+                            </span>
                             {oldPrice && (
-                                <Tag
-                                    className={classes.priceDiffer}
-                                    color="green"
-                                >
-                                    {Price(price - oldPrice)}
-                                </Tag>
+                                <span>
+                                    <span className="screenReaderComment">
+                                        скидка
+                                    </span>
+                                    <Tag
+                                        className={classes.priceDiffer}
+                                        color="green"
+                                    >
+                                        {Price(price - oldPrice)}
+                                    </Tag>
+                                </span>
                             )}
                         </div>
                         <div className={classes.credit}>
-                            {Price(credit)}/<span>мес</span>
+                            <span>
+                                <span className="screenReaderComment">
+                                    кредит
+                                </span>
+                                {Price(credit)}/<span>мес</span>
+                            </span>
                         </div>
                         <div className={classes.rating}>
+                            <span className="screenReaderComment">
+                                {"рейтинг" + (reviewAvg ?? initialRating)}
+                            </span>
                             <Rating rating={reviewAvg ?? initialRating} />
                         </div>
                         <div className={classes.tags}>
@@ -96,8 +113,12 @@ export const Product = motion(
                                 </Tag>
                             ))}
                         </div>
-                        <div className={classes.priceTitle}>цена</div>
-                        <div className={classes.creditTitle}>в кредит</div>
+                        <div className={classes.priceTitle} aria-hidden={true}>
+                            цена
+                        </div>
+                        <div className={classes.creditTitle} aria-hidden={true}>
+                            в кредит
+                        </div>
                         <div className={classes.ratingTitle}>
                             <a href="#review" onClick={goToReview}>
                                 {reviewCount}{" "}
@@ -171,6 +192,7 @@ export const Product = motion(
                                 appearence="ghost"
                                 arrow={isReviewOpen ? "down" : "right"}
                                 onClick={() => setIsReviewOpen(!isReviewOpen)}
+                                aria-expanded={!isReviewOpen}
                             >
                                 Читать отзывы
                             </Button>

@@ -32,6 +32,7 @@ export const ReviewForm: FC<ReviewFormProps> = ({ productId, className }) => {
         register,
         formState: { errors },
         reset,
+        clearErrors,
     } = useForm<IReviewForm>();
 
     const onSubmit = async (formData: IReviewForm) => {
@@ -66,6 +67,7 @@ export const ReviewForm: FC<ReviewFormProps> = ({ productId, className }) => {
                     })}
                     placeholder="Имя"
                     error={errors.name}
+                    aria-invalid={errors.name ? true : false}
                 />
                 <Input
                     {...register("title", {
@@ -77,6 +79,7 @@ export const ReviewForm: FC<ReviewFormProps> = ({ productId, className }) => {
                     placeholder="Заголовок отзыва"
                     className={classes.title}
                     error={errors.title}
+                    aria-invalid={errors.title ? true : false}
                 />
                 <div className={classes.rating}>
                     <span className={classes.rate}>Оценка:</span>
@@ -95,7 +98,7 @@ export const ReviewForm: FC<ReviewFormProps> = ({ productId, className }) => {
                                 setRating={field.onChange}
                                 isEditable
                                 ref={field.ref}
-                                error={errors.rating}
+                                errors={errors.rating}
                             />
                         )}
                     />
@@ -110,10 +113,15 @@ export const ReviewForm: FC<ReviewFormProps> = ({ productId, className }) => {
                     error={errors.description}
                     className={classes.reviewText}
                     placeholder="Текст отзыва"
+                    aria-label="текст отзыва"
                 />
 
                 <div className={classes.submit}>
-                    <Button className={classes.send} appearence="primary">
+                    <Button
+                        className={classes.send}
+                        appearence="primary"
+                        onClick={() => clearErrors()}
+                    >
                         Отправить
                     </Button>
                     <span className={classes.submitInfo}>
@@ -123,26 +131,35 @@ export const ReviewForm: FC<ReviewFormProps> = ({ productId, className }) => {
                 </div>
             </div>
             {isSuccess && (
-                <div className={cn(classes.success, classes.panel)}>
+                <div
+                    role="alert"
+                    className={cn(classes.success, classes.panel)}
+                >
                     <div className={classes.successTitle}>
                         Ваш отзыв отправлен
                     </div>
                     <span>
                         Спасибо, ваш отзыв будет опубликован после проверки
                     </span>
-                    <CrossIcon
+                    <button
+                        aria-label="закрыть уведомление"
                         className={classes.close}
                         onClick={() => setIsSuccess(false)}
-                    />
+                    >
+                        <CrossIcon />
+                    </button>
                 </div>
             )}
             {error && (
-                <div className={cn(classes.panel, classes.error)}>
+                <div className={cn(classes.panel, classes.error)} role="alert">
                     {error}
-                    <CrossIcon
+                    <button
+                        aria-label="закрыть уведомление"
                         className={classes.close}
                         onClick={() => setError("")}
-                    />
+                    >
+                        <CrossIcon />
+                    </button>
                 </div>
             )}
         </form>

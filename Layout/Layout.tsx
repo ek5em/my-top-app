@@ -1,9 +1,4 @@
-import {
-    FunctionComponent,
-    KeyboardEvent,
-    useRef,
-    useState,
-} from "react";
+import { FunctionComponent, KeyboardEvent, useRef, useState } from "react";
 import cn from "classnames";
 import { Header } from "./Header/Header";
 import { Sidebar } from "./Sidebar/Sidebar";
@@ -41,9 +36,14 @@ export const withLayout = <T extends Record<string, unknown>>(
                 </a>
                 <Header className={classes.header} />
                 <Sidebar className={classes.sidebar} />
-                <div className={classes.body} tabIndex={0} ref={bodyRef}>
+                <main
+                    className={classes.body}
+                    tabIndex={0}
+                    ref={bodyRef}
+                    role="main"
+                >
                     <Component {...props} />
-                </div>
+                </main>
                 <Up />
                 <Footer className={classes.footer} />
             </div>

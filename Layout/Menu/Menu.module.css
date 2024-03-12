@@ -2,6 +2,10 @@
     color: #787d85;
 }
 
+.menu ul {
+    list-style: none;
+}
+
 .firstLevel {
     display: grid;
     grid-template-columns: 24px 1fr;

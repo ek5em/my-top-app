@@ -16,8 +16,16 @@ a {
     color: inherit;
 }
 
-nextjs-portal {
-    display: none !important;
+button {
+    border: none;
+    background: none;
+}
+
+.screenReaderComment {
+    width: 0;
+    height: 0;
+    position: absolute;
+    overflow: hidden;
 }
 
 :root {

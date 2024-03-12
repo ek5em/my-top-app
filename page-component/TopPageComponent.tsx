@@ -14,6 +14,7 @@ import { sortReduser } from "./sort.reducer";
 import { ESort } from "../components/Sort/Sort";
 
 import classes from "./TopPageComponent.module.css";
+import { useReducedMotion } from "framer-motion";
 
 interface ITopPageProps {
     firstLevelCattegory: TopLevelCategory;
@@ -49,18 +50,24 @@ const TopPageComponent: FC<ITopPageProps> = ({
                     <div className={classes.title}>
                         <Htag tag="h1">{page.title}</Htag>
                         {products.length && (
-                            <Tag color="gray" size="l">
+                            <Tag
+                                color="gray"
+                                size="l"
+                                aria-label={products.length + "товаров"}
+                            >
                                 {products.length}
                             </Tag>
                         )}
                         <Sort sort={sort} setSort={setSort} />
                     </div>
-                    <div>
+                    <ul>
                         {sortedProducts &&
                             sortedProducts.map((p) => (
-                                <Product layout key={p._id} product={p} />
+                                <li className={classes.product} key={p._id}>
+                                    <Product layout product={p} />
+                                </li>
                             ))}
-                    </div>
+                    </ul>
                     <div className={classes.HhTitle}>
                         <Htag tag="h2">Вакансии - {page.category}</Htag>
                         <Tag color="red" size="l">

@@ -1,9 +1,9 @@
 "use client";
 import { FC, HTMLAttributes, useState } from "react";
-import classes from "./Header.module.css";
 import { ButtonIcon, EIcon, Logo } from "../../components";
 import { Variants, motion } from "framer-motion";
 import { Sidebar } from "../Sidebar/Sidebar";
+import classes from "./Header.module.css";
 
 interface HeaderProps extends HTMLAttributes<HTMLDivElement> {}
 

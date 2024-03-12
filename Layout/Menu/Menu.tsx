@@ -13,11 +13,16 @@ import { firstLevelMenu } from "../../helpers";
 import { getMenu } from "../../api";
 import classes from "./Menu.module.css";
 
+export enum EAnnounce {
+    closed = 1,
+    opened,
+}
+
 export const Menu: FC = () => {
     const [menu, setMenu] = useState<MenuItem[]>(null!);
     const [firstLevelCategory, setFirstLevelCategory] =
         useState<TopLevelCategory>(0);
-
+    const [announce, setAnnounce] = useState<EAnnounce | null>(null);
     const path = usePathname();
 
     useEffect(() => {
@@ -66,6 +71,9 @@ export const Menu: FC = () => {
         setMenu(
             menu.map((m) => {
                 if (m._id.secondCategory === secondCategory) {
+                    setAnnounce(
+                        m.isActive ? EAnnounce.closed : EAnnounce.opened
+                    );
                     m.isActive = !m.isActive;
                 }
                 return m;
@@ -83,9 +91,9 @@ export const Menu: FC = () => {
     const firstLevelMenuBiulder = (): JSX.Element => {
         const path = usePathname().split("/")[1];
         return (
-            <>
+            <ul>
                 {firstLevelMenu.map((menu) => (
-                    <div key={menu.name}>
+                    <li key={menu.name} aria-expanded={path === menu.route}>
                         <Link href={`/${menu.route}`}>
                             <div
                                 onClick={() => {
@@ -101,15 +109,15 @@ export const Menu: FC = () => {
                             </div>
                         </Link>
                         {path === menu.route && secondLevelBuilder(menu)}
-                    </div>
+                    </li>
                 ))}
-            </>
+            </ul>
         );
     };
 
     const secondLevelBuilder = (menuItem: FirstLevelCategory): JSX.Element => {
         return (
-            <div className={classes.secondBlock}>
+            <ul className={classes.secondBlock}>
                 {menu &&
                     menu.map((m) => {
                         if (
@@ -120,9 +128,8 @@ export const Menu: FC = () => {
                             m.isActive = true;
                         }
                         return (
-                            <div key={m._id.secondCategory}>
-                                <div
-                                    tabIndex={0}
+                            <li key={m._id.secondCategory}>
+                                <button
                                     className={classes.secondLevel}
                                     onClick={() => {
                                         changeSecondCategory(
@@ -135,10 +142,11 @@ export const Menu: FC = () => {
                                             m._id.secondCategory
                                         );
                                     }}
+                                    aria-expanded={m.isActive}
                                 >
                                     {m._id.secondCategory}
-                                </div>
-                                <motion.div
+                                </button>
+                                <motion.ul
                                     layout
                                     className={classes.secondLevelBlock}
                                 >
@@ -147,11 +155,11 @@ export const Menu: FC = () => {
                                         menuItem.route,
                                         m.isActive ?? false
                                     )}
-                                </motion.div>
-                            </div>
+                                </motion.ul>
+                            </li>
                         );
                     })}
-            </div>
+            </ul>
         );
     };
 
@@ -163,7 +171,7 @@ export const Menu: FC = () => {
         return (
             <>
                 {pages.map((page) => (
-                    <motion.div
+                    <motion.li
                         variants={variants}
                         initial="hidden"
                         animate={isOpen ? "visible" : "hidden"}
@@ -176,14 +184,28 @@ export const Menu: FC = () => {
                                     `/${route}/${page.alias}` === path,
                             })}
                             tabIndex={isOpen ? 0 : -1}
+                            aria-current={
+                                `/${route}/${page.alias}` === path
+                                    ? "page"
+                                    : false
+                            }
                         >
                             {page.category}
                         </Link>
-                    </motion.div>
+                    </motion.li>
                 ))}
             </>
         );
     };
 
-    return <div className={classes.menu}>{firstLevelMenuBiulder()}</div>;
+    return (
+        <nav className={classes.menu} role="navigation">
+            {announce && (
+                <span className="screenReaderComment" role="log">
+                    {announce === EAnnounce.opened ? "развёрнуто" : "свёрнуто"}
+                </span>
+            )}
+            {firstLevelMenuBiulder()}
+        </nav>
+    );
 };

@@ -18,13 +18,13 @@ interface RaitingProps extends HTMLAttributes<HTMLDivElement> {
     isEditable?: boolean;
     rating: number;
     setRating?: (rating: number) => void;
-    error?: FieldError;
+    errors?: FieldError;
 }
 
 export const Rating = forwardRef(
     (
         {
-            error,
+            errors,
             rating,
             setRating,
             isEditable = false,
@@ -101,7 +101,7 @@ export const Rating = forwardRef(
             <div
                 ref={ref}
                 className={cn(classes.rating, {
-                    [classes.error]: error,
+                    [classes.error]: errors,
                 })}
                 {...props}
             >
@@ -115,6 +115,16 @@ export const Rating = forwardRef(
                             tabIndex={focusHandler(rating, i)}
                             onKeyDown={keyDownHandler}
                             ref={(r) => ratingArrayRef.current?.push(r)}
+                            role={isEditable ? "slider" : ""}
+                            aria-label={
+                                isEditable
+                                    ? "укажите рейтинг"
+                                    : "рейтинг" + rating
+                            }
+                            aria-valuemin={1}
+                            aria-valuemax={5}
+                            aria-valuenow={rating}
+                            aria-invalid={errors ? true : false}
                         >
                             <StarIcon
                                 className={cn(classes.star, {
@@ -125,9 +135,9 @@ export const Rating = forwardRef(
                         </span>
                     );
                 })}
-                {error && (
-                    <span className={classes.errorMessage}>
-                        {error.message}
+                {errors && (
+                    <span role="alert" className={classes.errorMessage}>
+                        {errors.message}
                     </span>
                 )}
             </div>

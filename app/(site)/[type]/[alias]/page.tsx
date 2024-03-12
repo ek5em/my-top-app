@@ -7,22 +7,23 @@ import TopPageComponent from "../../../../page-component/TopPageComponent";
 import { useEffect, useState } from "react";
 import { ProductModel } from "../../../../interfaces/product.interface";
 import { TopPageModel } from "../../../../interfaces/page.interface";
+import Error404 from "../../../404";
 
 const TopPage = ({ params }: { params: { alias: string; type: string } }) => {
     const [page, setPage] = useState<TopPageModel | null>(null);
-    const [products, setProducts] = useState<ProductModel[]>([]);
+    const [products, setProducts] = useState<ProductModel[] | null>(null);
 
     useEffect(() => {
         const fetchPage = async () => {
             const pageRes = await getPage(params.alias);
             if (!pageRes) {
-                return notFound();
+                return;
             }
             setPage(pageRes);
 
             const productsRes = await getProducts(pageRes.category);
             if (!productsRes) {
-                return notFound();
+                return;
             }
             setProducts(productsRes);
         };
@@ -33,15 +34,16 @@ const TopPage = ({ params }: { params: { alias: string; type: string } }) => {
         (m) => m.route === params.type
     );
 
-    if (firstCategoryItem) {
-        return (
-            <TopPageComponent
-                firstLevelCattegory={firstCategoryItem.id}
-                page={page}
-                products={products}
-            />
-        );
+    if (!firstCategoryItem || !products) {
+        return <Error404 />;
     }
+    return (
+        <TopPageComponent
+            firstLevelCattegory={firstCategoryItem.id}
+            page={page}
+            products={products}
+        />
+    );
 };
 
 export default withLayout(TopPage);

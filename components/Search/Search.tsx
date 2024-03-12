@@ -8,41 +8,45 @@ import MagnifierIcon from "./magnifier.svg";
 import classes from "./Search.module.css";
 import { useRouter } from "next/navigation";
 
-interface SearchProps extends HTMLAttributes<HTMLDivElement> {}
+interface SearchProps extends HTMLAttributes<HTMLFormElement> {}
 
 export const Search: FC<SearchProps> = ({ className, ...props }) => {
-   const [search, setSearch] = useState<string>("");
-   const router = useRouter();
+    const [search, setSearch] = useState<string>("");
+    const router = useRouter();
 
-   const goToSearch = () => {
-      router.push(`/search?q=${search}`);
-   };
+    const goToSearch = () => {
+        router.push(`/search?q=${search}`);
+    };
 
-   const keyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") {
-         goToSearch();
-      }
-   };
+    const keyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            goToSearch();
+        }
+    };
 
-   return (
-      <div className={cn(className, classes.search)} {...props}>
-         <Input
-            className={classes.input}
-            placeholder="Поиск..."
-            value={search}
-            onChange={(e) => {
-               setSearch(e.target.value);
-            }}
-            onKeyDown={keyDownHandler}
-         />
-         <Button
-            className={classes.btn}
-            appearence="primary"
-            onClick={goToSearch}
-         >
-            <MagnifierIcon />
-         </Button>
-      </div>
-   );
+    return (
+        <form
+            className={cn(className, classes.search)}
+            {...props}
+            role="search"
+        >
+            <Input
+                className={classes.input}
+                placeholder="Поиск..."
+                value={search}
+                onChange={(e) => {
+                    setSearch(e.target.value);
+                }}
+                onKeyDown={keyDownHandler}
+            />
+            <Button
+                aria-label="Искать по сайту"
+                className={classes.btn}
+                appearence="primary"
+                onClick={goToSearch}
+            >
+                <MagnifierIcon />
+            </Button>
+        </form>
+    );
 };
-
