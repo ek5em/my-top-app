@@ -34,15 +34,21 @@ const TopPage = ({ params }: { params: { alias: string; type: string } }) => {
         (m) => m.route === params.type
     );
 
-    if (!firstCategoryItem || !products) {
+    if (!firstCategoryItem) {
         return <Error404 />;
     }
     return (
-        <TopPageComponent
-            firstLevelCattegory={firstCategoryItem.id}
-            page={page}
-            products={products}
-        />
+        <>
+            {products ? (
+                <TopPageComponent
+                    firstLevelCattegory={firstCategoryItem.id}
+                    page={page}
+                    products={products}
+                />
+            ) : (
+                <></>
+            )}
+        </>
     );
 };
 
