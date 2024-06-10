@@ -1,6 +1,5 @@
 "use client";
 import {
-    FC,
     ForwardedRef,
     HTMLAttributes,
     KeyboardEvent,
