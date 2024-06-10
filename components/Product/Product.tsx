@@ -64,7 +64,7 @@ export const Product = motion(
                     <Card className={classes.product} color="white">
                         <div className={classes.logo}>
                             <img
-                                src={process.env.NEXT_PUBLIC_DOMAIN + image[1]}
+                                src={image}
                                 alt={title}
                                 height={70}
                                 width={70}
