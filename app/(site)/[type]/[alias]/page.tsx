@@ -1,6 +1,5 @@
 "use client";
 import { getPage, getProducts } from "../../../../api";
-import { notFound } from "next/navigation";
 import { withLayout } from "../../../../Layout/Layout";
 import { firstLevelMenu } from "../../../../helpers";
 import TopPageComponent from "../../../../page-component/TopPageComponent";

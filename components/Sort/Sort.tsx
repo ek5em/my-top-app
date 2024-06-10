@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, KeyboardEvent } from "react";
+import { FC, HTMLAttributes } from "react";
 import cn from "classnames";
 import SortIcon from "./sort.svg";
 import classes from "./Sort.module.css";
